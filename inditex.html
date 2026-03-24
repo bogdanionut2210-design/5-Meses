@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Para ti 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9ecf, #ffcce6, #ffe6f2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CORAZONES */
+.hearts {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    bottom: -50px;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.2);
+    }
+}
+
+/* Pantallas */
+.screen {
+    display: none;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+.active {
+    display: block;
+}
+
+/* Tarjeta */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Botón */
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #ff69b4;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Input */
+input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid pink;
+    margin-top: 10px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 👈 hace el cuadrado perfecto */
+    object-fit: cover;   /* 👈 recorta sin deformar */
+    border-radius: 10px;
+}
+
+/* Botón escondido */
+.hidden-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.3;
+}
+</style>
+</head>
+
+<body>
+
+<!-- CORAZONES -->
+<div class="hearts"></div>
+
+<!-- 1. BIENVENIDA -->
+<div class="screen active" id="screen1">
+    <div class="card">
+        <h2>💖 Hola mi amor 💖</h2>
+        <p>Tengo algo especial para ti...</p>
+        <button onclick="next(2)">Comenzar 😏</button>
+    </div>
+</div>
+
+<!-- 2. TEXTO PERSONAL -->
+<div class="screen" id="screen2">
+    <div class="card">
+        <p>
+        Gracias por estos 5 meses juntos, superando fases bonitos y feos como esta pasando ahora mismo, no quiero q estes triste nunca pq no deberias estarlo por el simple hecho de q yo estoy aqui pa ayudarte, aun nos queda tiempo adelante si dios quiere y podamos hacer lo q tenemos planeado, miniña teamo demasiado mas de lo q tu crees aunq haga mis gilipolleces pq asi soy yo, teamo con todo mi corazon, y yo nunca hare nada pa joderte pq siempre intento estar lo mas contigo, teamo mi princesita prechiosa
+        </p>
+        <button onclick="next(3)">Seguir 💕</button>
+    </div>
+</div>
+
+<!-- 3. JUEGO -->
+<div class="screen" id="screen3">
+    <div class="card">
+        <p>¿Que dia es mi cumple? (00/00/00)</p>
+        <input id="respuesta">
+        <button onclick="checkGame()">Responder</button>
+        <p id="error" style="color:red; display:none;">❌ Intenta otra vez</p>
+    </div>
+</div>
+
+<!-- 4. GALERÍA -->
+<div class="screen" id="screen4">
+    <div class="card">
+        <h3>💞 Nuestros momentos 💞</h3>
+        <div class="gallery">
+            <!-- CAMBIA ESTAS IMÁGENES -->
+            <img src="69bcd043-ade9-4abb-909e-b83e3d988022.JPEG">
+            <img src="IMG_1187.JPEG">
+            <img src="847935E8-C597-4E0A-B2D9-DAB4DDB1F076.PNG">
+        </div>
+    </div>
+
+    <!-- BOTÓN ESCONDIDO -->
+    <button class="hidden-btn" onclick="next(5)">💗</button>
+</div>
+
+<!-- 5. FINAL -->
+<div class="screen" id="screen5">
+    <div class="card">
+        <h2> 5 Meses </h2>
+        <p>
+        Te amo muchísimo <br><br>
+        Gracias por estos 5 meses tan increíbles.<br>
+        Eres lo mejor que me ha pasado <br><br>
+        Y quiero seguir viviendo mil momentos más contigo 
+        </p>
+    </div>
+</div>
+
+<script>
+function next(n) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById("screen" + n).classList.add("active");
+}
+
+// JUEGO
+function checkGame() {
+    let respuesta = document.getElementById("respuesta").value.toLowerCase().trim();
+
+    if (respuesta === "22/10/07") { // CAMBIA ESTO
+        next(4);
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
+}
+
+// CORAZONES
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💗";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 15 + 15) + "px";
+    heart.style.animationDuration = (10 + Math.random() * 10) + "s";
+
+    document.querySelector(".hearts").appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 20000);
+}
+
+setInterval(createHeart, 800);
+</script>
+
+</body>
+</html>
